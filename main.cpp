@@ -1,5 +1,4 @@
 #include<iostream>
-#include<stdio.h>
 #include"complexvector.hpp"
 #include"complexnumber.h"
 #include"complexvector1.hpp"
@@ -15,7 +14,6 @@ int main() {
 	data2.push_back(c);
 	data1.push_back(c);
 	data2.push_back(d);
-	data1.output("vertres.txt");
-	data2.output("horires.txt");
-return 0;
+	if(data1.output("vertres.txt")&&data2.output("horires.txt")) cout<<"CHECK vertres.txt & horires.txt"<<endl;
 }
+

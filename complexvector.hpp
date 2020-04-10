@@ -8,7 +8,7 @@ protected:
 	CCompexVector(int l, const string& path) ;
 
 public:
-	virtual void output(const string& path)=0;
+	virtual bool output(const string& path)=0;
 	CCompexVector() ;
 
 	virtual ~CCompexVector() ;

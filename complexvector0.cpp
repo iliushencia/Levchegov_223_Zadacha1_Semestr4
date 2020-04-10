@@ -1,6 +1,6 @@
 #include"complexvector0.hpp"
 
-	virtual void CCompexVectorVert::output(const string& path) {
+	bool CCompexVectorVert :: output(const string& path) {
 		 ofstream out;          // поток для записи
 		 out.open(path); // окрываем файл для записи
 		if (out.is_open()) {
@@ -9,6 +9,7 @@
 						out<<this->dat()[i].r()<<dat()[i].i()<<"i"<<endl;
 			}
 		}
+		return true;
 	}
 
 CCompexVectorVert&  operator + (const CCompexVector& a, const CCompexVector& b) {

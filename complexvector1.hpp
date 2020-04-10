@@ -5,7 +5,7 @@
 class CCompexVectorHori :public CCompexVector{
 	public:
 	CCompexVectorHori(int l, const string& path) : CCompexVector(l, path) {}
-	virtual void output(const string& path) ;
+	virtual bool output(const string& path) ;
 };
 
 #endif // CCOMPLEXVECTOR1_H

@@ -1,0 +1,212 @@
+#include <vector>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+class Complex {
+public:
+	Complex(){
+		real=0;
+		imag=0;
+	}
+	Complex(int re, int im){
+		real=re;
+		imag=im;
+	}
+	Complex(int re){
+		real=re;
+		imag=0;
+	}
+	int r() const { return real;}
+	int i() const { return imag;}
+	Complex& operator = (const Complex& a){
+		this->real=a.r();
+		this->imag=a.i();
+		return *this;
+	}
+private:
+	int real;
+	int imag;
+};
+
+Complex operator + (const Complex& a, const Complex& b){
+	Complex res (a.r()+b.r(),a.i()+b.i());
+	return res;
+}
+
+Complex operator - (const Complex& a, const Complex& b){
+	Complex res (a.r()-b.r(),a.i()-b.i());
+	return res;
+}
+
+Complex operator * (const Complex& a, const Complex& b){
+	Complex res (a.r()*b.r()-a.i()*b.i(),a.r()*b.i()+a.i()*b.r());
+	return res;
+}
+
+class CCompexVector {
+protected:
+	CCompexVector(int l, const string& path) {
+			len=0;
+			data = new Complex[l-1];
+			int re=0, im=0;
+			char sign = ' ';
+			ifstream input(path);
+			if(input){
+				string line;
+				while (getline(input, line)) {
+				stringstream ss(line);
+				ss>>re>>sign>>im;
+				if(sign=='-') im=-im;
+				Complex num (re,im);
+				data[len]=num;
+				len++;
+				}
+				if(len!=l){
+					cout<<"SIZE ERROR"<<endl;
+					delete[] data;
+				}
+			} else { cout<<"ERROR FILE" <<endl;}
+
+		}
+
+public:
+	virtual void output(const string& path)=0;
+	//virtual ~CCompexVector() = 0;
+	CCompexVector() {
+		len=0;
+		data = {};
+	}
+
+	virtual ~CCompexVector() {
+		delete[] data;
+	}
+
+	void push_back(const Complex& num) {
+		Complex* old = data;
+		data = new Complex [len];
+		for (int i = 0; i<len; i++){
+			data[i]=old[i];
+		}
+		data[len]=num;
+		len++;
+	}
+	CCompexVector& operator = (const CCompexVector& a) {
+		this->len=a.len;
+		this->data=a.data;
+		return *this;
+	}
+	int size() const {
+		return len;
+	}
+	Complex* dat() const {
+		return data;
+	}
+private:
+	int len;
+	Complex* data;
+};
+
+Complex operator * (const CCompexVector& a, const CCompexVector& b) {
+	Complex res=0;
+	if(a.size()>=b.size()){
+		for(int i=0; i<b.size(); i++){
+			res=res+a.dat()[i]*b.dat()[i];
+		}
+	} else {
+		for(int i=0; i<a.size(); i++){
+			res=res+a.dat()[i]*b.dat()[i];
+		}
+	}
+	return res;
+}
+
+class CCompexVectorVert :public CCompexVector{
+	public:
+	friend CCompexVectorVert& operator - (CCompexVector& a, CCompexVector& b);
+	CCompexVectorVert(int l, const string& path) : CCompexVector(l, path) {}
+	virtual void output(const string& path) {
+		 ofstream out;          // поток для записи
+		 out.open(path); // окрываем файл для записи
+		if (out.is_open()) {
+			for(int i=0; i<this->size(); i++) {
+				this->dat()[i].i()>=0 ? out<<this->dat()[i].r()<<"+"<<dat()[i].i()<<"i"<<endl :
+						out<<this->dat()[i].r()<<dat()[i].i()<<"i"<<endl;
+			}
+		}
+	}
+};
+class CCompexVectorHori :public CCompexVector{
+	public:
+	CCompexVectorHori(int l, const string& path) : CCompexVector(l, path) {}
+	virtual void output(const string& path) {
+			 ofstream out;          // поток для записи
+			 out.open(path); // окрываем файл для записи
+			if (out.is_open()) {
+				for(int i=0; i<this->size(); i++) {
+					this->dat()[i].i()>=0 ? out<<this->dat()[i].r()<<"+"<<dat()[i].i()<<"i"<<"   " :
+							out<<this->dat()[i].r()<<dat()[i].i()<<"i"<<"   ";
+				}
+			}
+		}
+};
+
+CCompexVectorVert& operator + (const CCompexVector& a, const CCompexVector& b) {
+	CCompexVectorVert* res = new CCompexVectorVert [0];
+	if(a.size()>=b.size()){
+		for(int i=0; i<b.size(); i++){
+			res->push_back(a.dat()[i]+b.dat()[i]);
+		}
+		for(int i=b.size(); i<a.size(); i++){
+			res->push_back(a.dat()[i]);
+		}
+	} else {
+		for(int i=0; i<a.size(); i++){
+			res->push_back(a.dat()[i]+b.dat()[i]);
+		}
+		for(int i=a.size(); i<b.size(); i++){
+			res->push_back(b.dat()[i]);
+		}
+	}
+	return *res;
+}
+
+
+CCompexVectorVert& operator - (CCompexVector& a, CCompexVector& b) {
+	CCompexVectorVert* res = new CCompexVectorVert [0];
+	if(a.size()>=b.size()){
+		for(int i=0; i<b.size(); i++){
+			res->push_back(a.dat()[i]-b.dat()[i]);
+		}
+		for(int i=b.size(); i<a.size(); i++){
+			res->push_back(a.dat()[i]);
+		}
+	} else {
+		for(int i=0; i<a.size(); i++){
+			res->push_back(a.dat()[i]-b.dat()[i]);
+		}
+		for(int i=a.size(); i<b.size(); i++){
+			res->push_back(0-b.dat()[i]);
+		}
+	}
+	return *res;
+}
+
+
+int main() {
+	Complex a (1,1);
+	Complex b = a + a;
+	Complex c = a - a;
+	Complex d = b * c;
+	CCompexVectorVert data1 (4,"data.txt");
+	CCompexVectorHori data2 (4,"data.txt");
+	data1.push_back(b);
+	data2.push_back(c);
+	data1.push_back(c);
+	data2.push_back(d);
+	data1.output("vertres.txt");
+	data2.output("horires.txt");
+return 0;
+}
+

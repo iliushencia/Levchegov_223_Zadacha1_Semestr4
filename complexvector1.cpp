@@ -1,6 +1,6 @@
 #include"complexvector1.hpp"
 
-	virtual void CCompexVectorHori:: output(const string& path) {
+	bool CCompexVectorHori :: output(const string& path) {
 			 ofstream out;          // поток для записи
 			 out.open(path); // окрываем файл для записи
 			if (out.is_open()) {
@@ -9,4 +9,5 @@
 							out<<this->dat()[i].r()<<dat()[i].i()<<"i"<<"   ";
 				}
 			}
+			return true;
 		}

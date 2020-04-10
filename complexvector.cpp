@@ -2,7 +2,7 @@
 
 	CCompexVector::CCompexVector(int l, const string& path) {
 			len=0;
-			data = new Complex[l-1];
+			data = new Complex[l];
 			int re=0, im=0;
 			char sign = ' ';
 			ifstream input(path);
@@ -29,13 +29,13 @@
 		data = {};
 	}
 
-	virtual CCompexVector::~CCompexVector() {
+	CCompexVector::~CCompexVector() {
 		delete[] data;
 	}
 
 	void CCompexVector::push_back(const Complex& num) {
 		Complex* old = data;
-		data = new Complex [len];
+		data = new Complex [len+1];
 		for (int i = 0; i<len; i++){
 			data[i]=old[i];
 		}
