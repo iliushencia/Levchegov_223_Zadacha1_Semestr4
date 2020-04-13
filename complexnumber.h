@@ -1,4 +1,6 @@
 #include<iostream>
+#include<string>
+#include<sstream>
 #ifndef COMPLEXNUMBER_H
 #define COMPLEXNUMBER_H
 //#pragma once

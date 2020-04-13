@@ -8,6 +8,7 @@ class CCompexVectorVert :public CCompexVector{
 	public:
 	friend CCompexVectorVert& operator - (CCompexVector& a, CCompexVector& b);
 	CCompexVectorVert(int l, const string& path) : CCompexVector(l, path) {}
+	CCompexVectorVert() : CCompexVector() {}
 	virtual bool output(const string& path);
 };
 
