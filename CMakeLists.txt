@@ -5,7 +5,7 @@ project(ComplexVector)
 #aux_source_directory(. SRC_LIST)
 
 set(VECTOR_SRC main.cpp complexnumber.cpp complexvector.cpp complexvector1.cpp complexvector0.cpp)
-set(VECTOR_HDR complexnumber.h complexvector.hpp complexvector1.hpp complexvector0.hpp )
+set(VECTOR_HDR complexnumber.h complexvector.hpp complexvector1.hpp complexvector0.hpp)
 
 #add_executable(${PROJECT_NAME} ${SRC_LIST})
 #add_library(vector STATIC ${VECTOR_SRC} ${VECTOR_HDR})

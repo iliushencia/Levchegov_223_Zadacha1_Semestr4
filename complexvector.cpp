@@ -1,28 +1,23 @@
 #include "complexvector.hpp"
 
-	CCompexVector::CCompexVector(int l, const string& path) {
+	CCompexVector::CCompexVector(int l, const string& line) {
 			len=0;
 			data = new Complex[l];
 			int re=0, im=0;
 			char sign = ' ';
-			ifstream input(path);
-			if(input){
-				string line;
-				while (getline(input, line)) {
-				stringstream ss(line);
-				ss>>re>>sign>>im;
-				if(sign=='-') im=-im;
-				Complex num (re,im);
-				data[len]=num;
-				len++;
-				}
-				if(len!=l){
-					cout<<"SIZE ERROR"<<endl;
-					delete[] data;
-				}
-			} else { cout<<"ERROR FILE" <<endl;}
-
-		}
+			stringstream ss(line);
+			string num = "";
+			ss>>num>>num>>num;
+			for (int i=0; i<l; i++) {
+			ss>>num;
+			stringstream nn(num);
+			nn>>re>>sign>>im;
+			if(sign=='-') im=-im;
+			Complex num (re,im);
+			data[len]=num;
+			len++;
+			}
+	}
 
 	CCompexVector::CCompexVector() {
 		len=0;

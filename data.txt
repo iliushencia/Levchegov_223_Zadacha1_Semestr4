@@ -1,4 +1,5 @@
-1+1i
-1-1i
--1+1i
--1-1i
+vert 8 data1.txt 1+1i 6+1i 1+1i -1+1i 1+1i 1+1i 1-1i 1+1i
+vert 5 data2.txt 1-1i -1+1i 1-1i 1+1i -4+1i
+hori 6 data3.txt -1+1i 1-2i 1+1i 1+1i 1+1i 1+1i
+vert 1 data4.txt 1+1i
+hori 11 data5.txt 1+1i 1+1i -1+1i 1+1i -6+1i 1+1i 1-1i -1+1i -7+1i 1+1i 1+1i 

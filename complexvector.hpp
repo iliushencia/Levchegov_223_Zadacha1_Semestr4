@@ -5,7 +5,7 @@
 #include <fstream>
 class CCompexVector {
 protected:
-	CCompexVector(int l, const string& path) ;
+	CCompexVector(int l, const string& line) ;
 
 public:
 	virtual bool output(const string& path)=0;
