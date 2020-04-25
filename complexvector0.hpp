@@ -2,20 +2,26 @@
 #define CCOMPLEXVECTOR0_H
 #include "complexvector.hpp"
 #include"complexvector1.hpp"
-
+#include "omp.h"
+#include<chrono>
 
 class CCompexVectorVert :public CCompexVector{
 	public:
-	friend CCompexVectorVert& operator - (CCompexVector& a, CCompexVector& b);
 	CCompexVectorVert(int l, const string& path) : CCompexVector(l, path) {}
 	CCompexVectorVert() : CCompexVector() {}
+	CCompexVectorVert(const CCompexVector& copy):CCompexVector( copy) {}
+	CCompexVectorVert (int l) : CCompexVector(l) {}
 	virtual bool output(const string& path);
+	using CCompexVector:: operator = ;
+private:
+	int len;
+	Complex* data;
 };
 
-CCompexVectorVert& operator + (const CCompexVector& a, const CCompexVector& b) ;
+CCompexVector& operator + (const CCompexVector& a,const CCompexVector& b) ;
 
+CCompexVector& operator - (const CCompexVector& a, const CCompexVector& b) ;
 
-CCompexVectorVert& operator - (CCompexVector& a, CCompexVector& b) ;
 
 #endif // CCOMPLEXVECTOR0_H
 

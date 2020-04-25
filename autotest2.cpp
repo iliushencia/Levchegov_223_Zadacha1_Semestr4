@@ -1,36 +1,22 @@
 #include<iostream>
+#include<string>
 #include"complexvector.hpp"
 #include"complexnumber.h"
 #include"complexvector1.hpp"
 #include"complexvector0.hpp"
 using namespace std;
 
-bool autotest1();
-bool autotest2();
-
-int main() {
-	cout << "Test1: ";
-	if (autotest1()) {
-		cout << "done" << endl;
-	}
-	else {
-			cout << "error" << endl;
-			return -1;
-	}
-	cout << "Test2: ";
-	if (autotest2()) {
-		cout << "done" << endl;
-	}
-	else {
-		cout << "error" << endl;
-		return -1;
-	}
+bool autotest2() {
+	ofstream in;          // поток для записи
+	in.open("test2.txt");
+	in << "hori 5 none.txt 1+1i 2+2i 3+3i 4+4i 5+5i" << endl << "vert 5 none.txt 1+1i 2+2i 3+3i 4+4i 5+5i";
+	in.close();
 	CCompexVector** res;
 	res = new CCompexVector*[0];
 	string* paths;
 	paths = new string[0];
 	int count = 0;
-	string check = "", path="data.txt";
+	string check = "", path = "test2.txt";
 	ifstream input(path);
 	if (input.is_open()) {
 		string line;
@@ -42,13 +28,13 @@ int main() {
 			string* temp;
 			temp = paths;
 			paths = new string[count + 1];
-			for (int i = 0; i<count; i++) paths[i] = temp[i];
+			for (int i = 0; i < count; i++) paths[i] = temp[i];
 			paths[count] = path;
 			if (type == "vert") {
 				CCompexVector** temp;
 				temp = res;
 				res = new CCompexVector*[count + 1];
-				for (int i = 0; i<count; i++) res[i] = temp[i];
+				for (int i = 0; i < count; i++) res[i] = temp[i];
 				res[count] = (new CCompexVectorVert(l, line));
 				count++;
 			}
@@ -56,22 +42,18 @@ int main() {
 				CCompexVector** temp;
 				temp = res;
 				res = new CCompexVector*[count + 1];
-				for (int i = 0; i<count; i++) res[i] = temp[i];
+				for (int i = 0; i < count; i++) res[i] = temp[i];
 				res[count] = (new CCompexVectorHori(l, line));
 				count++;
 			}
 		}
-		
-	} else {
-		cout << "Error! Cannot open " << path << endl;
-		return -1;
+		(*res[0] - *res[1]).output("test2.txt");
 	}
-	for (int i =0; i<count; i++){
-		if(res[i]->output(paths[i])) continue;
-		check = "error";
+	ifstream out("test2.txt");
+	string line;
+	while (getline(out, line)) {
+		if (line == "0+0i" ) continue;
+		return false;
 	}
-	if (check=="") {cout<<"check all the output files"<<endl<<"Press any key to continue"<<endl;}
-	else {cout<<check<<endl<<"Press any key to continue"<<endl;}
-	cin >> check; //для того чтобы консолька не закрывалась
-	return 0;
+	return true;
 }

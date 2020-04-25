@@ -3,6 +3,10 @@
 	CCompexVector::CCompexVector(int l, const string& line) {
 			len=0;
 			data = new Complex[l];
+			for (int i = 0; i < l; ++i) {
+				Complex null(0, 0);
+				data[i] = null;
+			}
 			int re=0, im=0;
 			char sign = ' ';
 			stringstream ss(line);
@@ -19,9 +23,14 @@
 			}
 	}
 
+	CCompexVector::CCompexVector(int l) {
+				len=l;
+				data = new Complex[l];
+				this->nullall();
+				}
 	CCompexVector::CCompexVector() {
 		len=0;
-		data = {};
+		data = new Complex[0];
 	}
 
 	CCompexVector::~CCompexVector() {
@@ -36,6 +45,7 @@
 		}
 		data[len]=num;
 		len++;
+		delete[] old;
 	}
 	CCompexVector& CCompexVector::operator = (const CCompexVector& a) {
 		this->len=a.len;
@@ -61,4 +71,19 @@ Complex operator * (const CCompexVector& a, const CCompexVector& b) {
 		}
 	}
 	return res;
+}
+
+void CCompexVector:: add(int i, const CCompexVector& a) {
+	data[i] = data[i] + a.dat()[i];
+}
+
+void CCompexVector::sub(int i, const CCompexVector& a) {
+	data[i] = data[i] - a.dat()[i];
+}
+
+void CCompexVector:: nullall() {
+	for (int i = 0; i < len; ++i) {
+		Complex null (0,0);
+		data[i]=null;
+	}
 }

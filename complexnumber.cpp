@@ -19,8 +19,6 @@
 		this->imag=a.i();
 		return *this;
 	}
-	int real;
-	int imag;
 
 Complex operator + (const Complex& a, const Complex& b){
 	Complex res (a.r()+b.r(),a.i()+b.i());

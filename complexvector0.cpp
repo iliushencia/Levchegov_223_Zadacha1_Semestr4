@@ -4,51 +4,54 @@
 		 ofstream out;          // поток для записи
 		 out.open(path); // окрываем файл для записи
 		if (out.is_open()) {
-			for(int i=0; i<this->size(); i++) {
+			int k = this->size();
+			for(int i=0; i<k; i++) {
 				this->dat()[i].i()>=0 ? out<<this->dat()[i].r()<<"+"<<dat()[i].i()<<"i"<<endl :
 						out<<this->dat()[i].r()<<dat()[i].i()<<"i"<<endl;
+				
 			}
+			out.close();
+			return true;
 		}
-		return true;
+		return false;
 	}
 
-CCompexVectorVert&  operator + (const CCompexVector& a, const CCompexVector& b) {
-	CCompexVectorVert* res = new CCompexVectorVert [0];
-	if(a.size()>=b.size()){
-		for(int i=0; i<b.size(); i++){
-			res->push_back(a.dat()[i]+b.dat()[i]);
-		}
-		for(int i=b.size(); i<a.size(); i++){
-			res->push_back(a.dat()[i]);
-		}
+	CCompexVector&  operator + (const CCompexVector& a,const CCompexVector& b) {
+	int size = 0, len =0;
+	if (a.size() >= b.size()) {
+		size = b.size();
+		len = a.size();
 	} else {
-		for(int i=0; i<a.size(); i++){
-			res->push_back(a.dat()[i]+b.dat()[i]);
-		}
-		for(int i=a.size(); i<b.size(); i++){
-			res->push_back(b.dat()[i]);
-		}
+		size = a.size();
+		len = b.size();
+	}
+	auto res = new CCompexVectorVert(len);
+	res->nullall();
+	int i = 0;
+	for (i = 0; i < size; ++i) {
+	res->add(i, a);
+	res->add(i, b);
 	}
 	return *res;
-}
-
-
-CCompexVectorVert& operator - (CCompexVector& a, CCompexVector& b) {
-	CCompexVectorVert* res = new CCompexVectorVert [0];
-	if(a.size()>=b.size()){
-		for(int i=0; i<b.size(); i++){
-			res->push_back(a.dat()[i]-b.dat()[i]);
-		}
-		for(int i=b.size(); i<a.size(); i++){
-			res->push_back(a.dat()[i]);
-		}
-	} else {
-		for(int i=0; i<a.size(); i++){
-			res->push_back(a.dat()[i]-b.dat()[i]);
-		}
-		for(int i=a.size(); i<b.size(); i++){
-			res->push_back(0-b.dat()[i]);
-		}
 	}
-	return *res;
-}
+
+
+	CCompexVector&  operator - (const CCompexVector& a, const CCompexVector& b) {
+		int size = 0, len = 0;
+		if (a.size() >= b.size()) {
+			size = b.size();
+			len = a.size();
+		}
+		else {
+			size = a.size();
+			len = b.size();
+		}
+		auto res = new CCompexVectorVert(len);
+		res->nullall();
+		int i = 0;
+		for (i = 0; i < size; ++i) {
+			res->add(i, a);
+			res->sub(i, b);
+		}
+		return *res;
+	}
