@@ -13,9 +13,6 @@ class CCompexVectorVert :public CCompexVector{
 	CCompexVectorVert (int l) : CCompexVector(l) {}
 	virtual bool output(const string& path);
 	using CCompexVector:: operator = ;
-private:
-	int len;
-	Complex* data;
 };
 
 CCompexVector& operator + (const CCompexVector& a,const CCompexVector& b) ;
