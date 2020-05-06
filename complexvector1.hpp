@@ -10,9 +10,6 @@ class CCompexVectorHori :public CCompexVector {
 	CCompexVectorHori (int l) : CCompexVector(l) {}
 	virtual bool output(const string& path) ;
 	using CCompexVector::operator = ;
-private:
-	int len;
-	Complex* data;
 };
 
 #endif // CCOMPLEXVECTOR1_H
